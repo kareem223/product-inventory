@@ -23,7 +23,7 @@ import com.product.springboot.inventory.model.Product;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class EmployeeControllerIntegrationTest {
+public class ProductControllerIntegrationTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 

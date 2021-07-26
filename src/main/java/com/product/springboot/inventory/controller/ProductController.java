@@ -37,8 +37,7 @@ public class ProductController {
 	private SequenceGeneratorService sequenceGeneratorService;
 
 	@GetMapping("/products")
-	public List<Product> getAllEmployees(@RequestParam(required = false) String category) {
-		System.out.println("inside getAllEmployees...."+category);
+	public List<Product> getAllProducts(@RequestParam(required = false) String category) {
 		if(category!=null) {
 			return productRepository.findProductsByCategory(category);
 		}
@@ -70,16 +69,15 @@ public class ProductController {
 //	}
 
 	@PostMapping("/products")
-	public Product createEmployee(@Valid @RequestBody Product product) {
+	public Product createProduct(@Valid @RequestBody Product product) {
 		product.setId(sequenceGeneratorService.generateSequence(Product.SEQUENCE_NAME));
 		return productRepository.save(product);
 	}
 
 	@CachePut(value = "products", key = "#productobjId")
 	@PutMapping("/products/{id}")
-	public Product updateEmployee(@PathVariable(value = "id") Long productobjId,
+	public Product updateProduct(@PathVariable(value = "id") Long productobjId,
 			@Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
-		System.out.println("inside updateEmployee....");
 		Product product = productRepository.findById(productobjId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + productobjId));
 
@@ -94,7 +92,7 @@ public class ProductController {
 
 	@CacheEvict(value = "products", key = "#productobjId")
 	@DeleteMapping("/products/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long productobjId)
+	public Map<String, Boolean> deleteProduct(@PathVariable(value = "id") Long productobjId)
 			throws ResourceNotFoundException {
 		Product product = productRepository.findById(productobjId)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found for this id :: " + productobjId));
